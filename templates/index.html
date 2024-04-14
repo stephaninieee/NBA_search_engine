@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>NBA Data Viewer</title>
+  <style>
+    .search-bar {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .search-input {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    .search-label {
+      margin-right: 5px;
+    }
+    .results-table {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">NBA Data Viewer</h1>
+
+    <div class="search-bar">
+      <form class="form-inline justify-content-center" action="/" method="post">
+        
+        <label for="searchDate" class="search-label">Date:</label>
+        <input type="text" class="form-control search-input" id="searchDate" name="searchDate" placeholder="e.g., October 19 2022">
+        
+        <label for="searchTeam" class="search-label">Team:</label>
+        <input type="text" class="form-control search-input" id="searchTeam" name="searchTeam" placeholder="e.g., DET">
+        
+        <label for="searchQuarter" class="search-label">Quarter:</label>
+        <input type="text" class="form-control search-input" id="searchQuarter" name="searchQuarter" placeholder="1 to 4">
+        
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+      </form>
+    </div>
+
+    <div class="numresults font-weight-bold text-center mb-3">
+      {% if numresults is not none %}
+      Number of Results: <span>{{ numresults }}</span>
+      {% endif %}
+    </div>
+
+    {% if results %}
+      <div class="results-table">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Location</th>
+              <th scope="col">Away Team</th>
+              <th scope="col">Home Team</th>
+              <th scope="col">Away Score</th>
+              <th scope="col">Home Score</th>
+              <th scope="col">Quarter</th>
+              <th scope="col">Play</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for document in results %}
+              <tr>
+                <td>{{ document['Date'][0] }}</td>
+                <td>{{ document['Time'][0] }}</td>
+                <td>{{ document['Location'][0] }}</td>
+                <td>{{ document['AwayTeam'][0] }}</td>
+                <td>{{ document['HomeTeam'][0] }}</td>
+                <td>{{ document['AwayScore'][0] }}</td>
+                <td>{{ document['HomeScore'][0] }}</td>
+                <td>{{ document['Quarter'][0] }}</td>
+                <td>{{ document['HomePlay'][0] if document['HomePlay'] else document['AwayPlay'][0] if document['AwayPlay'] else 'N/A' }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
