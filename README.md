@@ -1,6 +1,7 @@
 
 
 # NBA Search Engine
+COMP 631 Information Retrieval Final Project
 
 ## Authors
 - Chia-Wei Jan (cj35)
